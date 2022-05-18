@@ -10,13 +10,17 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.URI;
+import java.util.Enumeration;
 
 @RestController
 @RequestMapping("/v1")
@@ -51,6 +55,18 @@ class DemoController {
         String result = response.body().string();
         System.out.println(result);
         return result;
+    }
+
+    @GetMapping("/stream")
+    public ResponseEntity<String> testStream(HttpServletRequest request) throws IOException {
+        String s = request.getHeader("Request-Origion");
+        if(!"Knife4j".equals(s)){
+            return new ResponseEntity<>("internal error", HttpStatus.SERVICE_UNAVAILABLE);
+        }
+        Enumeration<String> headerNames = request.getHeaderNames();
+        Enumeration<String> ll1 = request.getHeaders("ll");
+
+        return ResponseEntity.ok("OK");
     }
 
 
