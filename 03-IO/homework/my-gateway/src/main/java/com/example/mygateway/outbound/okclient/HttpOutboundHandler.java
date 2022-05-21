@@ -4,6 +4,8 @@ import com.example.mygateway.client.MyOkHttpClient;
 import com.example.mygateway.filter.HeaderHttpHttpResponseFilter;
 import com.example.mygateway.filter.HttpRequestFilter;
 import com.example.mygateway.filter.HttpResponseFilter;
+import com.example.mygateway.remout.HttpEndpointRouter;
+import com.example.mygateway.remout.RandomHttpRouter;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -15,6 +17,7 @@ public class HttpOutboundHandler {
 
     private List<String> urlList;
     HttpResponseFilter responseFilter = new HeaderHttpHttpResponseFilter();
+    HttpEndpointRouter router = new RandomHttpRouter();
 
     public HttpOutboundHandler(List<String> urlList){
         this.urlList = urlList;
@@ -26,7 +29,9 @@ public class HttpOutboundHandler {
         MyOkHttpClient okHttpClient = new MyOkHttpClient();
         FullHttpResponse response = null;
         try {
-            String value = okHttpClient.testHttpGet(this.urlList.get(0));
+            String uri = fullHttpRequest.getUri();
+            String url = router.getUrl(this.urlList) + uri;
+            String value = okHttpClient.testHttpGet(url);
             response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, Unpooled.wrappedBuffer(value.getBytes("UTF-8")));
 
             response.headers().set("Content-Type", "application/json");

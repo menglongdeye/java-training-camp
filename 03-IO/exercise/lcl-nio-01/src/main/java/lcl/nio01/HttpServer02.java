@@ -22,7 +22,7 @@ public class HttpServer02 {
     }
 
     private static void service(Socket socket) {
-        String body = "hello lcl-nio-001";
+        String body = "hello lcl-nio-8081";
         try{
             PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true);
             printWriter.println("HTTP/1.1 200 OK");
