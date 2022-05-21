@@ -3,27 +3,26 @@ package com.example.mygateway.inbound;
 import com.example.mygateway.client.MyOkHttpClient;
 import com.example.mygateway.filter.HeaderHttpHttpRequestFilter;
 import com.example.mygateway.filter.HttpRequestFilter;
-import com.example.mygateway.outbound.okclient.HttpOutboundHandler;
+import com.example.mygateway.outbound.okclient.OkHttpOutboundHandler;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.*;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public class MyHttpHandler extends ChannelInboundHandlerAdapter {
 
     private List<String> urlList;
 
-    private HttpOutboundHandler httpOutboundHandler;
+    private OkHttpOutboundHandler httpOutboundHandler;
 
     HttpRequestFilter httpRequestFilter = new HeaderHttpHttpRequestFilter();
 
     public MyHttpHandler(List<String> urlList){
         this.urlList = urlList;
-        this.httpOutboundHandler = new HttpOutboundHandler(this.urlList);
+        this.httpOutboundHandler = new OkHttpOutboundHandler(this.urlList);
     }
 
     @Override
