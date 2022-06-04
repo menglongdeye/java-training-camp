@@ -1,4 +1,4 @@
-package lcl.juc;
+package lcl.spring;
 
 public class DaemonThread {
     public static void main(String[] args) throws InterruptedException {

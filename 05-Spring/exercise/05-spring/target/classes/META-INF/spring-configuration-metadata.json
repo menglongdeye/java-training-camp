@@ -1,0 +1,18 @@
+{
+  "groups": [
+    {
+      "name": "lcl",
+      "type": "com.lcl.spring.config.WebConfigProperty",
+      "sourceType": "com.lcl.spring.config.WebConfigProperty"
+    }
+  ],
+  "properties": [
+    {
+      "name": "lcl.age",
+      "type": "java.lang.Integer",
+      "sourceType": "com.lcl.spring.config.WebConfigProperty",
+      "defaultValue": 20
+    }
+  ],
+  "hints": []
+}
