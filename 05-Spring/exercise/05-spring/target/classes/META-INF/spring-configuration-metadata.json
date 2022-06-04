@@ -10,8 +10,9 @@
     {
       "name": "lcl.age",
       "type": "java.lang.Integer",
+      "description": "Whether enable shardingsphere or not.",
       "sourceType": "com.lcl.spring.config.WebConfigProperty",
-      "defaultValue": 20
+      "defaultValue": 18
     }
   ],
   "hints": []
