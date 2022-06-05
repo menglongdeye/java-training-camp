@@ -2,5 +2,11 @@ spring:
   profiles:
     active: @profile.active@
 
+lcl:
+  boot:
+    enabled: true
+    id: 66
+    name: zhangsan
+
 main:
   value: 123

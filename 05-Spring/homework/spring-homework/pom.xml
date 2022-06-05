@@ -38,6 +38,13 @@
             <artifactId>lombok</artifactId>
             <version>1.18.12</version>
         </dependency>
+
+
+        <dependency>
+            <groupId>com.lcl</groupId>
+            <artifactId>my-demo-spring-boot-starter</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <profiles>
         <profile>
