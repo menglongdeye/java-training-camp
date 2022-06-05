@@ -4,4 +4,6 @@ import com.lcl.myspring.homework.dto.XxlJobInfoDTO;
 
 public interface XxlJobService {
     XxlJobInfoDTO getInfo(int id);
+
+    XxlJobInfoDTO getInfoByJDBC(int id);
 }

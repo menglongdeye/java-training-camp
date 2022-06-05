@@ -1,5 +1,6 @@
 package com.lcl.myspring.homework;
 
+import com.alibaba.fastjson.JSON;
 import com.lcl.boot.service.ISchool;
 import com.lcl.boot.service.Klass;
 import com.lcl.boot.service.Student;
@@ -7,6 +8,8 @@ import com.lcl.myspring.homework.utils.SpringBeanUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+
+import javax.sql.DataSource;
 
 @SpringBootApplication
 public class SpringHomeworkApplication {
@@ -22,6 +25,10 @@ public class SpringHomeworkApplication {
         klass.dong();
         ISchool iSchool = applicationContext.getBean(ISchool.class);
         iSchool.ding();
+        String[] beanDefinitionNames = applicationContext.getBeanDefinitionNames();
+        for (String bean : beanDefinitionNames){
+            System.out.println(bean + "===" + applicationContext.getBean(bean));
+        }
     }
 
 }

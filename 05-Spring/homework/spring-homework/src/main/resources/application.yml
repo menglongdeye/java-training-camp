@@ -5,10 +5,38 @@ spring:
 
 
   datasource:
-    url: jdbc:mysql://localhost:3306/xxl_job?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/java-training-camp?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
     username: root
     password: ENC(wcXqCViJj4dmV1YsJPJPaFUNJFH8F4DNSe0XDy/bQKMmpd2eSA+zpE3fc82qlGbT)
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+    #以下的配置项是hikari特有的配置
+    # 等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 默认:30秒
+    hikari:
+      connection-timeout: 30000
+    # 最小连接数
+      minimum-idle: 100
+    # 最大连接数
+      maximum-pool-size: 200
+    # 自动提交
+      auto-commit: true
+    # 一个连接idle状态的最大时长（毫秒），超时则被释放（retired），默认:10分钟
+      idle-timeout: 600000
+    # 连接池名字
+      pool-name: DatebookHikariCP
+    # 一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），默认:30分钟 1800000ms，建议设置比数据库超时时长少60秒
+      max-lifetime: 28740000
+      connection-test-query: SELECT 1
+
+    #以下是针对MYSQL驱动的配置参数
+    # 在每个连接中缓存的语句的数量。默认值为保守值25。建议将其设置为250-500之间
+      prepStmtCacheSize: 300
+    # 缓存的已准备SQL语句的最大长度，默认值是256，但是往往这个长度不够用
+      prepStmtCacheSqlLimit: 2048
+    # 缓存开关，如果这里设置为false，上面两个参数都不生效
+      cachePrepStmts: true
+    #较新版本的 MySQL 支持服务器端准备好的语句，这可以提供实质性的性能提升
+      useServerPrepStmts: true
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
