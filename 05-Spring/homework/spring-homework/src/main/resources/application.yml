@@ -1,6 +1,22 @@
 spring:
   profiles:
-    active: @profile.active@
+    active: dev
+  ##active: @profile.active@
+
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/xxl_job?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: ENC(wcXqCViJj4dmV1YsJPJPaFUNJFH8F4DNSe0XDy/bQKMmpd2eSA+zpE3fc82qlGbT)
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+#jasypt加密的盐值
+jasypt:
+  encryptor:
+    password: lcl
 
 lcl:
   boot:
