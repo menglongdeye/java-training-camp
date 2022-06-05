@@ -9,6 +9,100 @@
     4、枚举
         用枚举来实现单例，是最简单的方式。这种实现方式通过 Java 枚举类型本身的特性，保证了实例创建的线程安全性和实例的唯一性。
 ## 二、maven/spring 的 profile 机制，都有什么用法？
+    1、在spring配置文件中选择环境
+            spring:
+                profiles:
+                    active: prod
+    2、在运行命令行上添加环境
+            java -jar spring-homework-0.0.1-SNAPSHOT.jar
+    3、使用pom文件
+        （1）主配置文件：
+            spring:
+                profiles:
+                    active: @profile.active@
+        （2）pom文件：
+                <profiles>
+                    <profile>
+                        <id>dev</id>
+                        <properties>
+                            <profile.active>dev</profile.active>
+                        </properties>
+                    </profile>
+                    <profile>
+                        <id>test</id>
+                        <properties>
+                            <profile.active>test</profile.active>
+                        </properties>
+                        <activation>
+                            <activeByDefault>true</activeByDefault>
+                        </activation>
+                    </profile>
+                    <profile>
+                        <id>pre</id>
+                        <properties>
+                            <profile.active>pre</profile.active>
+                        </properties>
+                    </profile>
+                    <profile>
+                        <id>prod</id>
+                        <properties>
+                            <profile.active>prod</profile.active>
+                        </properties>
+                    </profile>
+                </profiles>
+        （3）打包
+            在Idea打包时，选择指定的Profile即可，使用命令打包，mvn clean package package -P pre
+    4、 maven中的profile的激活条件还可以根据jdk、操作系统、文件存在或者缺失来激活。这些内容都是在<activation>标签中配置，如下：
+            <!--activation用来指定激活方式，可以根据jdk环境，环境变量，文件的存在或缺失-->
+            <activation>
+                <!--配置默认激活-->
+                <activeByDefault>true</activeByDefault>
+                <!--通过jdk版本-->
+                <!--当jdk环境版本为1.8时，此profile被激活-->
+                <jdk>1.8</jdk>
+                <!--当jdk环境版本1.8或以上时，此profile被激活-->
+                <jdk>[1.8,)</jdk>
+                <!--根据当前操作系统-->
+                <os>
+                    <name>WindowsXP</name>
+                    <family>Windows</family>
+                    <arch>x86</arch>
+                    <version>5.1.2600</version>
+                </os>
+            </activation>
+    5、资源过滤
+        如果不配置这一步，将会在任何环境下打包都会带上全部的配置文件，但是我们可以配置只保留对应环境下的配置文件，这样安全性更高。
+        配置很简单，只需要在pom.xml文件中指定<resource>过滤的条件即可，如下
+                <build>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-maven-plugin</artifactId>
+                        </plugin>
+                    </plugins>
+                    <resources>
+                        <!--排除配置文件-->
+                        <resource>
+                            <directory>src/main/resources</directory>
+                            <!--先排除所有的配置文件-->
+                            <excludes>
+                                <!--使用通配符，当然可以定义多个exclude标签进行排除-->
+                                <exclude>application*.yml</exclude>
+                            </excludes>
+                        </resource>
+                        <!--根据激活条件引入打包所需的配置和文件-->
+                        <resource>
+                            <directory>src/main/resources</directory>
+                            <!--引入所需环境的配置文件-->
+                            <filtering>true</filtering>
+                            <includes>
+                                <include>application.yml</include>
+                                <!--根据maven选择环境导入配置文件-->
+                                <include>application-${profile.active}.yml</include>
+                            </includes>
+                        </resource>
+                    </resources>
+                </build>
 
 ## 三、总结 Hibernate 与 MyBatis 的各方面异同点。
         相同点：
