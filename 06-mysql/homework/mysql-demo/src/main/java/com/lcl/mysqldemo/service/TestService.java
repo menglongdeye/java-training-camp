@@ -6,8 +6,11 @@ import com.lcl.mysqldemo.entity.db01.OrderInfo;
 import com.lcl.mysqldemo.entity.db02.XxlJobInfo;
 import com.lcl.mysqldemo.mapper.dynamic.OrderInfoMapper1;
 import com.lcl.mysqldemo.mapper.dynamic.XxlJobInfoMapper1;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 @Service
 public class TestService {
@@ -24,6 +27,8 @@ public class TestService {
 
     @DS(DataSourceConstants.DS_KEY_DB01)
     public OrderInfo getOrderInfo2(int key){
+        String.join(",", new ArrayList<>());
+        Pair<String, String> pair = new Pair<String, String>("","");
         return orderInfoMapper.selectByPrimaryKey(key);
     }
 
